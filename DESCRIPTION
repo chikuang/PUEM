@@ -29,4 +29,14 @@ LazyData: true
 RoxygenNote: 7.3.1
 Imports:
     dplyr,
-    tidyr
+    glmnet,
+    magrittr,
+    MASS
+Suggests: 
+    knitr,
+    rmarkdown,
+    forcats,
+    ggplot2,
+    ggpubr,
+    gridExtra
+VignetteBuilder: knitr
