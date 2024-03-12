@@ -42,8 +42,8 @@ library(PUEM)
 library(forcats)
 library(gridExtra)
 library(ggpubr)
-set.seed(777)
-dat_SCAR <- sim_data(n=500, m=500, piVal=0.3, mu1=rep(0,2), mu2= rep(0,2), mu3=rep(0,2))
+# set.seed(555)
+dat_SCAR <- sim_data(n=2000, m=2000, piVal=0.3, mu1=rep(0,2), mu2= rep(0,2), mu3=rep(0,2))
 fig1 <- dat_SCAR %>% mutate(R = factor(R), Y = factor(Y)) %>% 
   ggplot(aes(X1, X2, col = R)) + 
   geom_point(aes(shape = Y), size = 2.5) +  
@@ -63,20 +63,26 @@ ggarrange(fig1, fig2, ncol=2, nrow=1, common.legend = TRUE, legend="top")
 # Perform the inference on beta
 
 ```{r}
-p <- ncol(dat_SAR) - 2 
+p <- ncol(my_dat) - 2 
 alp1 <- -sum(mu2^2/2)
 beta1 <- mu2
 alp2 <- -sum(mu3^2/2)
 beta2 <- mu3 
 piVal <- 0.4
 param <- list(alp1 = alp1, alp2 = alp2, beta1 = beta1, beta2 = beta2, piVal = piVal)
-res3 <- elpu3(dat_SAR, param)
-res3_fix_pi <- elpu3(dat_SAR, param, updatePiVal = FALSE)
-reJ_ind <- 2*(res3$llk - res3_fix_pi$llk) < qchisq(0.95, 1)
-(ind_cover_pi <- ifelse(reJ_ind == "1", "Cover", "Not Cover"))
+res_test2 <- PU_SAR_test(dat_SCAR, param)
+res_test2
 
-res2 <- elpu2(dat_SAR, param)
-chi_val <- 2*(res3$llk - res2$llk)
-(pchisq(chi_val, p, lower.tail = TRUE))
+res_test3 <- PU_SAR_test(dat_SAR, param)
+res_test3
+# res3 <- elpu3(my_dat, param)
+# res3_fix_pi <- elpu3(my_dat, param, updatePiVal = FALSE)
+# reJ_ind <- 2*(res3$llk - res3_fix_pi$llk) < qchisq(0.95, 1)
+# (ind_cover_pi <- ifelse(reJ_ind == "1", "Cover", "Not Cover"))
+# 
+# res2 <- elpu2(dat_SCAR, param)
+# chi_val <- 2*(res3$llk - res2$llk)
+# (pchisq(chi_val, p, lower.tail = TRUE))
+
 ```
 
