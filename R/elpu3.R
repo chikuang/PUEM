@@ -23,7 +23,7 @@ elpu3 <- function(dat, param, maxiter = 500, tol = 1e-4, updatePiVal = TRUE, fli
   m <- nrow(dat_unlabel)
 
   while(err > tol & iter < maxiter){
-    omegaVec <- calc_omega(dat, param)
+    omegaVec <- calc_omega(dat, param, ind_SAR = TRUE)
     if(updatePiVal){
       piVal <- mean(omegaVec) # update pi
       param$piVal <- piVal

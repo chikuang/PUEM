@@ -2,18 +2,20 @@
 % Please edit documentation in R/calc_omega.R
 \name{calc_omega}
 \alias{calc_omega}
-\title{Calculate the omegaVec}
+\title{Calculate the omegaVec under SAR/SCAR assumption}
 \usage{
-calc_omega(dat, param)
+calc_omega(dat, param, ind_SAR = TRUE)
 }
 \arguments{
 \item{dat}{a data matrix that contains all the observations}
 
 \item{param}{a parameter vector that contains alp1, alp2, beta1, beta2 and values of pi}
+
+\item{ind_SAR}{an indicator to see if it is under the SAR assumption or SCAR assumption}
 }
 \value{
 a vector that consists the values of omega
 }
 \description{
-Calculate the omegaVec
+Calculate the omegaVec under SAR/SCAR assumption
 }

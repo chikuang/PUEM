@@ -22,9 +22,7 @@ elpu2 <- function(dat, param, maxiter = 500, tol = 1e-4, updatePiVal = TRUE, fli
   n <- nrow(dat_label)
   m <- nrow(dat_unlabel)
   while(err > tol & iter < maxiter){
-    temp <- exp(alp + dat_unlabel %*% beta )
-    omegaVec <- piVal/(piVal + (1-piVal) * temp)
-    rm(temp)
+    omegaVec <- calc_omega(dat, param, ind_SAR = FALSE)
     if(updatePiVal){
       piVal <- mean(omegaVec) # update pi
       param$piVal <- piVal

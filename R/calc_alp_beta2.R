@@ -50,7 +50,8 @@ calc_alp_beta2 <- function(dat, param, omegaVec){
 
   alp <- alp_star - log(sum(1-omegaVec)/(n + sum(omegaVec)))
 
-  return(list(alp1 = NULL, alp2 = alp, beta1 = NULL, beta2 = beta, piVal = param$piVal))
+  return(list(alp1 = 0, alp2 = alp, beta1 = rep(0, length(beta)),
+              beta2 = beta, piVal = param$piVal))
 }
 
 
