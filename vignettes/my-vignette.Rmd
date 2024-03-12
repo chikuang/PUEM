@@ -1,0 +1,82 @@
+---
+title: "my-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(ggplot2)
+library(dplyr)
+theme_set(theme_bw())
+theme_update(plot.title = element_text(hjust = 0.5, size = 14),
+             legend.text = element_text(size = 12),
+             axis.text = element_text(size = 12),
+             legend.title = element_blank(),
+             title = element_text(size = 12))
+
+sim_data <- function(n, m, piVal, mu1, mu2, mu3){
+  r_ind <- stats::rbinom(m, 1, piVal)
+  m1 <- sum(r_ind) # unobserved while it is positive, i.e. y = 1|r=0
+  m0 <- m - m1
+  sigma1 <- sigma2 <- sigma3 <- diag(rep(1, length(mu1)))
+  x1 <- MASS::mvrnorm(n = n, mu = mu1, Sigma = sigma1) # labelled
+  x2 <- MASS::mvrnorm(n = m1, mu = mu2, Sigma = sigma2) # unlabelled positive
+  x3 <- MASS::mvrnorm(n = m0, mu = mu3, Sigma = sigma3) # unlabelled negative
+  data.frame(rbind(x1, x2, x3),
+             R = as.factor(c(rep(1, n), rep(0, m))),
+             Y = as.factor(c(rep(1, n + m1), rep(0, m0))))
+}
+
+
+```
+
+```{r setup}
+library(PUEM)
+library(forcats)
+library(gridExtra)
+library(ggpubr)
+set.seed(777)
+dat_SCAR <- sim_data(n=500, m=500, piVal=0.3, mu1=rep(0,2), mu2= rep(0,2), mu3=rep(0,2))
+fig1 <- dat_SCAR %>% mutate(R = factor(R), Y = factor(Y)) %>% 
+  ggplot(aes(X1, X2, col = R)) + 
+  geom_point(aes(shape = Y), size = 2.5) +  
+  labs(title = "PU-SCAR data",
+       x = expression(X[1]), y = expression(X[2]))
+
+mu1=c(8,4); mu2= c(4, 3); mu3=c(6,-2)
+dat_SAR <- sim_data(n=2000, m=2000, piVal=0.3, mu1=c(8,4), mu2= c(4, 3), mu3=c(6,-2))
+fig2 <- dat_SAR %>% mutate(R = factor(R), Y = factor(Y)) %>% 
+  ggplot(aes(X1, X2, col = R)) + 
+  geom_point(aes(shape = Y), size = 2.5) +  
+  labs(title = "PU-SAR data",
+       x = expression(X[1]), y = expression(X[2]))
+ggarrange(fig1, fig2, ncol=2, nrow=1, common.legend = TRUE, legend="top")
+```
+
+# Perform the inference on beta
+
+```{r}
+p <- ncol(dat_SAR) - 2 
+alp1 <- -sum(mu2^2/2)
+beta1 <- mu2
+alp2 <- -sum(mu3^2/2)
+beta2 <- mu3 
+piVal <- 0.4
+param <- list(alp1 = alp1, alp2 = alp2, beta1 = beta1, beta2 = beta2, piVal = piVal)
+res3 <- elpu3(dat_SAR, param)
+res3_fix_pi <- elpu3(dat_SAR, param, updatePiVal = FALSE)
+reJ_ind <- 2*(res3$llk - res3_fix_pi$llk) < qchisq(0.95, 1)
+(ind_cover_pi <- ifelse(reJ_ind == "1", "Cover", "Not Cover"))
+
+res2 <- elpu2(dat_SAR, param)
+chi_val <- 2*(res3$llk - res2$llk)
+(pchisq(chi_val, p, lower.tail = TRUE))
+```
+
