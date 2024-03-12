@@ -20,3 +20,12 @@ devtools::install_github("chikuang/PUEM")
 ### Examples
 
 After installing and loading the package, please install the Vignette by `vignette(package = "PUEM")`.
+
+### TODO
+
+- [ ] Add inference on $pi$
+- [ ] Add examples
+- [ ] Fix some descriptions of the functions
+- [ ] Update and add documentation with more details
+- [ ] Rename the package (maybe)
+- [ ] Add the adjustment of $\hat{\pi}$ by adding the "flip" to prevent the proportion mismatch
