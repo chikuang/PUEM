@@ -9,7 +9,7 @@
 #' @return a list of values: piVal, alp1, alp2, beta1, beta2, llk and iteration number
 #' @export
 
-elpu3 <- function(dat, param, maxiter = 500, tol = 1e-4, updatePiVal = TRUE, flip = TRUE){
+elpu3 <- function(dat, param, maxiter = 500, tol = 1e-8, updatePiVal = TRUE, flip = TRUE){
   alp1 <- param$alp1; beta1 <- param$beta1
   alp2 <- param$alp2; beta2 <- param$beta2
   piVal <- param$piVal

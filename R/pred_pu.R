@@ -1,17 +1,17 @@
 #' Calculate the Bayes classifer accurary for the PU data
 #'
 #' @param res_model the resulting model from the elpu2 or elpu3 functions.
-#' @param dat_new the testing data set
+#' @param dat_test the testing data set
 #' @param pu_components this is an indicator about how many components do we assume: either 2 (SCAR) or 3 (SAR)
 #'
 #' @return The resulting classification rate for the entire data and the unlabelled data only
 #' @export
 
 pred_pu <- function(res_model, dat_test, pu_components){
-  dat_test_X <- dat_new %>%
+  dat_test_X <- dat_test %>%
     dplyr::select(starts_with("X")) %>%
     as.matrix()
-  dat_test_Y <- dat_new %>% filter(R == 0) %>%
+  dat_test_Y <- dat_test %>% filter(R == 0) %>%
     mutate(Y = as.numeric(as.character(Y))) %>% pull(Y)
 
   piVal_hat <- res_model$piVal
