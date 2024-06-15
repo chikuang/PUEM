@@ -14,6 +14,7 @@ pred_pu <- function(res_model, dat_new, pu_components){
   dat_unlabel_Y <- dat_new %>% filter(R == 0) %>%
     mutate(Y = as.numeric(as.character(Y))) %>% pull(Y)
 
+  piVal_hat <- res_model$piVal
   if(pu_components == 2){
     Lambda1_R0 <- 1
     Lambda2_R0 <- exp(res_model$alp + dat_unlabel %*% res_model$beta)
