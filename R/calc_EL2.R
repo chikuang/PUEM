@@ -6,7 +6,7 @@
 #' @return llk the log-likelihood value
 #' @export
 #'
-calc_EL2 <- function(dat, param, omegaVec){
+calc_EL2 <- function(dat, param, omegaVec) {
   alp <- param$alp2; beta <- param$beta2
   piVal <- param$piVal
   dat_all <- extract_dat(dat, ind_label = 2)

@@ -6,7 +6,7 @@
 #' @return a vector that consists the updated parameter values of alp1, alp2, beta1 and beta2
 #' @export
 
-calc_alp_beta2 <- function(dat, param, omegaVec){
+calc_alp_beta2 <- function(dat, param, omegaVec) {
   alp <- param$alp2; beta <- param$beta2
 
   dat_label <- extract_dat(dat, 1)
@@ -53,8 +53,3 @@ calc_alp_beta2 <- function(dat, param, omegaVec){
   return(list(alp1 = 0, alp2 = alp, beta1 = rep(0, length(beta)),
               beta2 = beta, piVal = param$piVal))
 }
-
-
-
-
-

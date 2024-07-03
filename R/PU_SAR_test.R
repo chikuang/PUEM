@@ -6,7 +6,7 @@
 #' importFrom("stats", "pchisq")
 #' @export
 
-PU_SAR_test <- function(dat, param){
+PU_SAR_test <- function(dat, param) {
   p <- length(param$beta1)
   res3 <- elpu3(dat, param)
   res2 <- elpu2(dat, param)

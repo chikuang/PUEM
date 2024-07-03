@@ -5,7 +5,7 @@
 #' @return a matrix with all data that are either labeled or unlabeled
 #' @export
 
-extract_dat <- function(dat, ind_label = 2){
+extract_dat <- function(dat, ind_label = 2) {
   if(ind_label == 2){
     dat_temp <- dat
   } else if(ind_label == 0) {

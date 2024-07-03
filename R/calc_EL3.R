@@ -5,7 +5,7 @@
 #' @param omegaVec the vector that determines weighting of the unlabeled positive
 #' @return llk the log-likelihood value
 #' @export
-calc_EL3 <- function(dat, param, omegaVec){
+calc_EL3 <- function(dat, param, omegaVec) {
   alp1 <- param$alp1; beta1 <- param$beta1
   alp2 <- param$alp2; beta2 <- param$beta2
   piVal <- param$piVal

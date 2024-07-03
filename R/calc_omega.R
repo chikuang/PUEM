@@ -6,7 +6,7 @@
 #' @return a vector that consists the values of omega
 #' @export
 
-calc_omega <- function(dat, param, ind_SAR = TRUE){
+calc_omega <- function(dat, param, ind_SAR = TRUE) {
   if(ind_SAR){
     alp1 <- param$alp1; beta1 <- param$beta1
   } else {

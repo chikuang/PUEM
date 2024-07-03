@@ -7,7 +7,7 @@
 #' @return The resulting classification rate for the entire data and the unlabelled data only
 #' @export
 
-pred_pu <- function(res_model, dat_test, pu_components){
+pred_pu <- function(res_model, dat_test, pu_components) {
   dat_test_X <- dat_test %>%
     dplyr::select(starts_with("X")) %>%
     as.matrix()
