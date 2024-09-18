@@ -1,4 +1,4 @@
-#' Calculate the omegaVec
+#' Calculate the alpha and beta values for SCAR model
 #'
 #' @param dat a data matrix that contains all the observations
 #' @param param a parameter vector that contains alp1, alp2, beta1, beta2 and values of pi
